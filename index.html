@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f5ef">
+  <meta name="description" content="A private letter for Jenna.">
+  <title>A Letter for Jenna</title>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --paper: #fffefa;
+      --ink: #313733;
+      --muted: #747b76;
+      --sage: #64766b;
+      --sage-soft: #e9efeb;
+      --blue-soft: #e8f0f3;
+      --line: rgba(70, 83, 75, .14);
+      --shadow: 0 24px 70px rgba(54, 65, 58, .10);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 9%, rgba(188, 207, 214, .30), transparent 27rem),
+        radial-gradient(circle at 95% 35%, rgba(192, 205, 196, .28), transparent 25rem),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button { font: inherit; -webkit-tap-highlight-color: transparent; }
+
+    .intro {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      background: rgba(247, 245, 239, .94);
+      backdrop-filter: blur(12px);
+      transition: opacity .7s ease, visibility .7s ease;
+    }
+
+    .intro.is-hidden { opacity: 0; visibility: hidden; }
+
+    .intro-card {
+      width: min(550px, 100%);
+      padding: clamp(42px, 8vw, 70px) clamp(28px, 7vw, 56px);
+      text-align: center;
+      background: rgba(255, 254, 250, .96);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .monogram {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      color: var(--sage);
+      background: var(--sage-soft);
+      font: italic 1.25rem Georgia, serif;
+    }
+
+    .eyebrow, .kicker {
+      margin: 0 0 13px;
+      color: var(--sage);
+      font-size: .72rem;
+      font-weight: 750;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, .salutation {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3.5rem, 13vw, 6rem);
+      line-height: .98;
+      letter-spacing: -.045em;
+    }
+
+    .intro-copy {
+      max-width: 390px;
+      margin: 23px auto 30px;
+      color: var(--muted);
+      font: 1.08rem/1.75 Georgia, "Times New Roman", serif;
+    }
+
+    .open-button {
+      border: 0;
+      border-radius: 999px;
+      padding: 15px 25px;
+      color: white;
+      background: var(--sage);
+      box-shadow: 0 13px 30px rgba(77, 95, 84, .20);
+      cursor: pointer;
+      font-size: .84rem;
+      font-weight: 750;
+      letter-spacing: .06em;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .open-button:hover { transform: translateY(-2px); background: #56685e; }
+    .open-button:active { transform: scale(.98); }
+
+    .intro-note {
+      margin: 15px 0 0;
+      color: #8a918c;
+      font-size: .75rem;
+      line-height: 1.5;
+    }
+
+    main {
+      min-height: 100vh;
+      padding: 65px 18px 100px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .8s ease .12s, transform .8s ease .12s;
+    }
+
+    main.is-visible { opacity: 1; transform: translateY(0); }
+
+    .header {
+      width: min(820px, 100%);
+      margin: 0 auto 31px;
+      text-align: center;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(2.45rem, 8vw, 4.8rem);
+      line-height: 1.04;
+      letter-spacing: -.035em;
+    }
+
+    .header-copy {
+      max-width: 560px;
+      margin: 15px auto 0;
+      color: var(--muted);
+      font: italic 1rem/1.7 Georgia, "Times New Roman", serif;
+    }
+
+    .letter {
+      width: min(820px, 100%);
+      margin: 0 auto;
+      padding: clamp(39px, 7vw, 72px);
+      background: rgba(255, 254, 250, .97);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    .salutation {
+      margin: 0 0 28px;
+      color: var(--sage);
+      font-size: clamp(2.1rem, 7vw, 3.5rem);
+      font-style: italic;
+    }
+
+    .letter p {
+      margin: 0 0 1.55em;
+      color: #414743;
+      font: clamp(1.04rem, 2.8vw, 1.18rem)/1.9 Georgia, "Times New Roman", serif;
+    }
+
+    .letter p:first-of-type::first-letter {
+      float: left;
+      margin: .08em .12em 0 0;
+      color: var(--sage);
+      font-size: 4.1rem;
+      line-height: .8;
+    }
+
+    .closing-rule {
+      width: 62px;
+      height: 1px;
+      margin: 42px 0 24px auto;
+      background: #9eb1b8;
+    }
+
+    .closing {
+      color: var(--sage);
+      text-align: right;
+      font: italic 1.08rem/1.6 Georgia, "Times New Roman", serif;
+    }
+
+    .closing small {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font: 700 .68rem/1.4 Inter, sans-serif;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .quote {
+      width: min(680px, 100%);
+      margin: 42px auto 0;
+      padding: 0 20px;
+      color: var(--sage);
+      text-align: center;
+      font: italic clamp(1.08rem, 3.5vw, 1.4rem)/1.65 Georgia, "Times New Roman", serif;
+    }
+
+    footer {
+      margin-top: 32px;
+      color: #909792;
+      text-align: center;
+      font-size: .68rem;
+      letter-spacing: .09em;
+    }
+
+    .music-control {
+      position: fixed;
+      right: max(16px, env(safe-area-inset-right));
+      bottom: max(16px, env(safe-area-inset-bottom));
+      z-index: 12;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px 8px 8px;
+      color: var(--ink);
+      background: rgba(255, 254, 250, .95);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      box-shadow: 0 15px 40px rgba(54, 65, 58, .14);
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity .3s ease, visibility .3s ease, transform .3s ease;
+    }
+
+    .music-control.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+
+    .music-icon {
+      display: grid;
+      place-items: center;
+      width: 33px;
+      height: 33px;
+      border-radius: 50%;
+      color: white;
+      background: var(--sage);
+      font-size: .8rem;
+    }
+
+    .music-copy { text-align: left; line-height: 1.15; }
+    .music-copy strong, .music-copy span { display: block; }
+    .music-copy strong { font: 600 .83rem Georgia, serif; }
+    .music-copy span { margin-top: 3px; color: var(--muted); font-size: .65rem; }
+
+    .notice {
+      position: fixed;
+      left: 50%;
+      bottom: 80px;
+      z-index: 13;
+      width: min(430px, calc(100% - 36px));
+      padding: 12px 16px;
+      color: var(--ink);
+      background: rgba(255, 254, 250, .98);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 15px 40px rgba(54, 65, 58, .14);
+      text-align: center;
+      font-size: .75rem;
+      line-height: 1.5;
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%, 10px);
+      transition: opacity .3s ease, visibility .3s ease, transform .3s ease;
+    }
+
+    .notice.is-visible { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+
+    @media (max-width: 640px) {
+      main { padding-top: 49px; }
+      .intro-card { border-radius: 23px; }
+      .letter { padding: 42px 26px 48px; border-radius: 22px; }
+      .letter p { line-height: 1.82; }
+      .music-copy strong { max-width: 125px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <section class="intro" id="intro" aria-label="Opening screen">
+    <div class="intro-card">
+      <div class="monogram">J</div>
+      <p class="eyebrow">A letter made only for you</p>
+      <h1>Jenna</h1>
+      <p class="intro-copy">Some words are meant to be read slowly—especially the ones that come from the heart.</p>
+      <button class="open-button" id="openLetter" type="button">Open the letter</button>
+      <p class="intro-note">Tap once to open the letter and begin the music.</p>
+    </div>
+  </section>
+
+  <main id="content">
+    <header class="header">
+      <p class="kicker">For Jenna</p>
+      <h2>A love that chooses to stay</h2>
+      <p class="header-copy">Not an escape from the world, but a reason to become braver in it.</p>
+    </header>
+
+    <article class="letter">
+      <h3 class="salutation">Jenna,</h3>
+
+      <p>Sa lipunang palaging naniningil, ang magmahal ay hindi rin mura. May presyo ang oras, ang pamasahe, ang pagod, ang pangungulila, at maging ang simpleng pagnanais na makita ka sa gitna ng araw na pareho tayong pagod. Sa Pilipinas, kung saan ang pahinga ay minsang nagiging pribilehiyo at ang araw-araw ay binibigatan ng taas-presyo, mababang sahod, at mapangaping sistema, mas lalo kong naiintindihan na ang pag-ibig ay hindi hiwalay sa realidad. Minsan, ito ay pagod na katawan na pinipiling lumambing pa rin. Minsan, ito ay kakarampot na oras na pilit ginagawang sapat. Minsan, ito ay simpleng “kumain ka na ba?” na may kasamang pag-aalala, pag-alala, at paninindigan.</p>
+
+      <p>Kaya siguro ang mahalin ka ay hindi lang basta damdamin. Hindi lang ito kilig, lambing, o pangakong maganda lamang kapag magaan ang hangin. Ang mahalin ka ay paninindigan, isang tahimik ngunit matibay na pagpili sa’yo, kahit hindi laging patas ang mundo. Sa gitna ng sistemang sanay kumuha, ikaw ang pinipili kong paglaanan. Sa mundong ginawang luho ang kapayapaan, ikaw ang aking pahinga at tahanan. Sa panahong pati pag-ibig ay sinusukat ng distansya, oras, kakayahan, at kung gaano pa karami ang natitira sa atin matapos tayong pagurin ng buhay, ikaw pa rin ang aking pinipili, minamahal, at ipinaglalaban.</p>
+
+      <p>Hindi kita minamahal nang magaan. Minamahal kita nang may kamalayan, na ang lambing ay paggawa rin, na ang pag-unawa ay araw-araw na gawain, at ang pananatili ay isang uri ng pakikibaka. Alam kong hindi sapat ang “mahal kita” kung hindi ito sinasabayan ng pag-iintindi, pagpapasensya, pag-aalaga, at pag-aalala. Kaya sa mga araw na mabigat ka, gusto kong maging puwang ako kung saan hindi mo kailangang magpanggap na matatag. Sa mga araw na pagod ka, gusto kong ako ang iyong maging pahinga. Sa mga araw na parang ang mundo ay masyadong malupit, gusto kong maging isa sa mga patunay na may lambing pa ring natitira rito, may yakap, may liwanag, may tayo.</p>
+
+      <p>Kung may rebolusyon mang tahimik, ito ay ang piliin kang mahalin sa panahong tinuturuan tayong unahin ang takot, pagod, at pagbitaw. Ikaw ang isa sa mga paninindigan kong hindi kailangang ipagsigawan para maging totoo. Mahal kita hindi bilang pagtakas sa mundo, kundi bilang dahilan para mas maging matapang dito. Dahil sa’yo, mas naiintindihan ko na ang pag-ibig ay hindi lang tamis sa panahong madali; ito rin ay tapang sa panahong mabigat, lambing sa panahong malupit, at paghawak sa panahong maraming bumibitaw.</p>
+
+      <p>Kaya salamat, Jenna. Salamat sa pagiging pahinga ko sa mundong laging nagmamadali. Salamat sa pagiging tahanan sa panahong maraming bagay ang hindi sigurado. Kung may isang bagay man akong gustong ipagpatuloy araw-araw, iyon ay ang mahalin ka nang buo, tapat, malaya, at may paninindigan.</p>
+
+      <div class="closing-rule" aria-hidden="true"></div>
+      <div class="closing">
+        Buong-buo, para sa’yo.
+        <small>Sa bawat araw na pipiliin natin ang isa’t isa</small>
+      </div>
+    </article>
+
+    <div class="quote">“Sa mundong ginawang luho ang kapayapaan, ikaw ang aking pahinga at tahanan.”</div>
+    <footer>MADE WITH LOVE, FOR JENNA</footer>
+  </main>
+
+  <audio id="backgroundMusic" preload="auto" loop playsinline>
+    <source src="assets/background-music.mp3" type="audio/mpeg">
+  </audio>
+
+  <button class="music-control" id="musicControl" type="button" aria-label="Pause background music">
+    <span class="music-icon" id="musicIcon" aria-hidden="true">Ⅱ</span>
+    <span class="music-copy">
+      <strong>Drawer — 10CM</strong>
+      <span id="musicStatus">Playing softly</span>
+    </span>
+  </button>
+
+  <div class="notice" id="notice" role="status" aria-live="polite"></div>
+
+  <script>
+    const intro = document.getElementById('intro');
+    const content = document.getElementById('content');
+    const openLetter = document.getElementById('openLetter');
+    const music = document.getElementById('backgroundMusic');
+    const musicControl = document.getElementById('musicControl');
+    const musicIcon = document.getElementById('musicIcon');
+    const musicStatus = document.getElementById('musicStatus');
+    const notice = document.getElementById('notice');
+
+    let opened = false;
+    let noticeTimer;
+    music.volume = 0.38;
+
+    function showNotice(message) {
+      clearTimeout(noticeTimer);
+      notice.textContent = message;
+      notice.classList.add('is-visible');
+      noticeTimer = setTimeout(() => notice.classList.remove('is-visible'), 4200);
+    }
+
+    function syncControl() {
+      const paused = music.paused;
+      musicIcon.textContent = paused ? '▶' : 'Ⅱ';
+      musicStatus.textContent = paused ? 'Tap to continue' : 'Playing softly';
+      musicControl.setAttribute('aria-label', paused ? 'Play background music' : 'Pause background music');
+    }
+
+    function openExperience() {
+      if (opened) return;
+      opened = true;
+
+      // Calling play directly inside this click is required by mobile browsers.
+      const playAttempt = music.play();
+
+      intro.classList.add('is-hidden');
+      content.classList.add('is-visible');
+      musicControl.classList.add('is-visible');
+
+      if (playAttempt !== undefined) {
+        playAttempt.then(syncControl).catch(() => {
+          syncControl();
+          showNotice('Tap the music button once to start the background audio.');
+        });
+      }
+    }
+
+    async function toggleMusic() {
+      if (music.paused) {
+        try {
+          await music.play();
+        } catch (error) {
+          showNotice('The audio could not start. Please reopen the complete website package.');
+        }
+      } else {
+        music.pause();
+      }
+      syncControl();
+    }
+
+    openLetter.addEventListener('click', openExperience);
+    musicControl.addEventListener('click', toggleMusic);
+    music.addEventListener('play', syncControl);
+    music.addEventListener('pause', syncControl);
+    music.addEventListener('error', () => {
+      syncControl();
+      showNotice('The background audio could not be loaded.');
+    });
+  </script>
+</body>
+</html>
