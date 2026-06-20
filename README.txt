@@ -1,7 +1,7 @@
 JENNA LETTER WEBSITE — FINAL
 
 The uploaded 10CM audio is already included as:
-<source src="background-music.mp3" type="audio/mpeg">
+assets/background-music.mp3
 
 OPEN LOCALLY
 1. Keep index.html and the assets folder together.
